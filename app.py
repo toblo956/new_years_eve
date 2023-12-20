@@ -1,5 +1,5 @@
 import streamlit as st
-from utils import packlista, packlista, setup_initial_session_state
+from utils import setup_initial_session_state
 
 setup_initial_session_state()
 

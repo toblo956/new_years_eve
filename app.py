@@ -1,22 +1,18 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-from responsibilities import print_responsibilities
-# Sample data: Replace this with your actual data
-data = {
-    "Person": ["Alice", "Bob", "Charlie", "Diana"],
-    "Responsibility": ["Decorations", "Food", "Music", "Games"],
-    "Completion": [50, 80, 30, 90]  # This can represent percentage completion
-}
+from utils import packlista, print_responsibilities, packlista
 
-df = pd.DataFrame(data)
 
 # Streamlit app layout
 st.write("## Välkommen till Orsa! ")
-st.image('images/moreus.jpeg', width=500)
+first_column, second_column = st.columns(2)
+first_column.image('images/moreus.jpeg', use_column_width=True)
+second_column.image('images/ful_bild.png', width=300)
 
 # Display the DataFrame
 st.write("## Ansvarsområden ")
 print_responsibilities()
 
-st.write("## Den spontanta delen")
+st.write("## Packlista ")
+packlista()

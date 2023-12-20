@@ -11,7 +11,6 @@ def print_responsibilities():
     df = pd.DataFrame(index=people, columns=columns)
 
     # Streamlit app layout
-    st.write (" #### New Year's Eve Responsibilities")
 
     st.data_editor(df)
 
@@ -26,3 +25,8 @@ def merge_df(st.session_state.persistent_df, edited_df):
     # merge the two dataframes
     st.experimental_rerun
 """
+
+def packlista():
+    df = pd.DataFrame()
+    df["Saker att ta med"] = ["Sovsäck", "Liggunderlag", "Tält", "Kudde", "Kläder", "Toalettartiklar", "Kamera", "Laddare", "Powerbank", "Vattenflaska", "Kudde", "Kläder", "Toalettartiklar", "Kamera", "Laddare", "Powerbank", "Vattenflaska"]
+    st.data_editor(df, width = 300)

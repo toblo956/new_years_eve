@@ -7,9 +7,11 @@ def load_data(file_path):
     # Function to load data from a CSV file
     return pd.read_csv(file_path)
 
-def save_data(df, sheets_connection):
-    # Function to save data to a CSV file
-    sheets_connection.update(data=df, worksheet='pack_list')
+def save_data(df, sheets_connection, worksheet="pack_list"):
+    try:
+        sheets_connection.update(data=df, worksheet=worksheet)
+    except:
+        st.write("Failed to save data to Google Sheets")
 
 def update_dataframe(changes):
     # Update edited rows
@@ -34,10 +36,13 @@ def update_dataframe(changes):
 def on_data_edited(df_to_update, sheets_connection):
     if df_to_update == "pack_list":
         update_dataframe(st.session_state.pack_list_changes)
-        save_data(st.session_state.pack_list, sheets_connection)
+        save_data(st.session_state.pack_list, sheets_connection, worksheet="pack_list")
     elif df_to_update == "responsibilities":
         update_dataframe(st.session_state.responsibilities_changes)
-        save_data(st.session_state.responsibilities_changes, sheets_connection)
+        save_data(st.session_state.responsibilities, sheets_connection, worksheet="responsibilities")
+    elif df_to_update == "food_responsibilities":
+        update_dataframe(st.session_state.food_responsibilities_changes)
+        save_data(st.session_state.food_responsibilities, sheets_connection, worksheet="mat")
 
 
 def setup_initial_session_state(forceClear=False):
@@ -47,8 +52,11 @@ def setup_initial_session_state(forceClear=False):
 
 def setup_gsheets_connection(worksheet="pack_list"):
     conn = st.connection("gsheets", type=GSheetsConnection)
-    df = conn.read(worksheet=1)
-    df = df.dropna(axis=1, how='all')
+    df = conn.read(worksheet=worksheet)
+
+    # Remove empty columns and rows
+    columns_to_drop = [col for col in df.columns if col == '' or pd.isna(col) or 'Unnamed' in col]
+    df.drop(columns=columns_to_drop, inplace=True)
     df = df.dropna(axis=0, how='all')
 
     return df, conn

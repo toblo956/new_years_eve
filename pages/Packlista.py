@@ -24,4 +24,5 @@ def packlista():
 setup_initial_session_state()
 header = st.container()
 header.title("Packlista (fyll på)" )
+st.image('images/packlista.png', width=300)
 packlista()

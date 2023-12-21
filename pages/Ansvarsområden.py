@@ -10,7 +10,7 @@ from utils import on_data_edited, setup_gsheets_connection, setup_initial_sessio
 
 
 def print_responsibilities():
-    # Load the initial pack list
+
     st.session_state.responsibilities, conn = setup_gsheets_connection("responsibilities")
     
     st.session_state.responsibilities["Person"] = pd.DataFrame(
@@ -29,7 +29,7 @@ def print_responsibilities():
 
     column_config={"Person": st.column_config.ImageColumn(width="medium") }
 
-    # Display the current pack list in a data editor
+
     st.data_editor(st.session_state.responsibilities.reset_index(drop=True), 
                                                 use_container_width=True,
                                                 on_change=on_data_edited,

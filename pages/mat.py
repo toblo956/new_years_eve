@@ -1,11 +1,28 @@
+import pandas as pd
 import streamlit as st
 
-from utils import setup_initial_session_state
+from utils import on_data_edited, setup_gsheets_connection, setup_initial_session_state
+
+
+def food_responsibilities():
+    st.session_state.food_responsibilities, conn = setup_gsheets_connection("mat")
+    # convert column "MAträtt" to string
+    st.session_state.food_responsibilities["Maträtt"] = st.session_state.food_responsibilities["Maträtt"].astype(str)
+    column_config={"Maträtt": st.column_config.TextColumn(width="medium") }
+    st.data_editor(st.session_state.food_responsibilities.reset_index(drop=True), 
+                                                use_container_width=True,
+                                                on_change=on_data_edited,
+                                                args=("food_responsibilities", conn),
+                                                key="food_responsibilities_changes",
+                                                column_config=column_config,
+                                                num_rows="dynamic"
+                                                )
+
+
 
 setup_initial_session_state()
 header = st.container()
-header.title("Mat")
+header.title("Mat (ändra o lägg till)")
 
-st.write("Frukost: Gröt med sylt")
-st.write("Varmrätt: Köttbullar med potatismos och lingonsylt")
-st.write("Efterrätt: Kladdkaka med grädde")
+st.image('images/mat.png', width=300)
+food_responsibilities()

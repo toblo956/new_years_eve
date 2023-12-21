@@ -50,6 +50,5 @@ def setup_gsheets_connection(worksheet="pack_list"):
     df = conn.read(worksheet=1)
     df = df.dropna(axis=1, how='all')
     df = df.dropna(axis=0, how='all')
-    st.write("Df" , df)
 
     return df, conn

@@ -2,6 +2,7 @@
 # Initial data setup
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 
 from utils import on_data_edited, setup_gsheets_connection, setup_initial_session_state
 
@@ -11,23 +12,22 @@ from utils import on_data_edited, setup_gsheets_connection, setup_initial_sessio
 def print_responsibilities():
     # Load the initial pack list
     st.session_state.responsibilities, conn = setup_gsheets_connection("responsibilities")
-    st.image("images/arvid.jpeg", width=300)
-    st.image("static/arvid.jpeg", width=300)
     
     st.session_state.responsibilities["Person"] = pd.DataFrame(
         {
             "Person": [
-                "app/static/arvid.jpeg",
-                "app/static/ellen.jpeg",
-                "app/static/tobias.jpeg",
-                "app/static/pernilla.jpeg",
-                "app/static/felix.jpeg",
-                "app/static/alla.png",
+                "https://storage.cloud.google.com/streamlit_images/arvid.jpeg",
+                "https://storage.cloud.google.com/streamlit_images/ellen.jpeg",
+                "https://storage.cloud.google.com/streamlit_images/tobias.jpeg",
+                "https://storage.cloud.google.com/streamlit_images/pernilla.jpeg",
+                "https://storage.cloud.google.com/streamlit_images/felix.jpeg",
+                "https://storage.cloud.google.com/streamlit_images/alla.png",
             ],
         }
     )
 
-    column_config={"Person": st.column_config.ImageColumn() }
+
+    column_config={"Person": st.column_config.ImageColumn(width="medium") }
 
     # Display the current pack list in a data editor
     st.data_editor(st.session_state.responsibilities.reset_index(drop=True), 
@@ -36,7 +36,7 @@ def print_responsibilities():
                                                 args=("responsibilities", conn),
                                                 key="responsibilities_changes",
                                                 column_config=column_config,
-                                                hide_index=True)
+                                                hide_index=True,)
 
 
 setup_initial_session_state()

@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-from utils import add_item, load_data, on_data_edited, setup_initial_session_state
+from utils import on_data_edited, setup_initial_session_state
 from streamlit_gsheets import GSheetsConnection
 
 

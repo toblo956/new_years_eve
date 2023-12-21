@@ -19,7 +19,10 @@ def update_dataframe(changes):
 
     # Append new rows
     if changes['added_rows']:
-        st.session_state.pack_list = pd.concat([st.session_state.pack_list, pd.DataFrame(changes['added_rows'])])
+        if changes['added_rows'][-1] == {}:
+            pass
+        else:
+            st.session_state.pack_list = pd.concat([st.session_state.pack_list, pd.DataFrame(changes['added_rows'])])
 
     if changes['deleted_rows']:
         # delete all updated rows

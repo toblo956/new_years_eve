@@ -17,9 +17,6 @@ def packlista():
                                                 key="pack_list_changes",
                                                 num_rows="dynamic")
 
-    text_placeholder, _ = st.columns([10, 2])
-    new_item = text_placeholder.text_input("Lägg till nytt föremål")
-
     
 
 setup_initial_session_state()

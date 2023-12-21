@@ -1,7 +1,7 @@
 from constants import INITIAL_SESSION_STATE
 import streamlit as st
 import pandas as pd
-
+from streamlit_gsheets import GSheetsConnection
 
 def load_data(file_path):
     # Function to load data from a CSV file
@@ -31,12 +31,25 @@ def update_dataframe(changes):
             st.session_state.pack_list = st.session_state.pack_list.drop(index)
     
 
-def on_data_edited(pack_list, sheets_connection):
-    update_dataframe(st.session_state.pack_list_changes)
-    save_data(st.session_state.pack_list, sheets_connection)
+def on_data_edited(df_to_update, sheets_connection):
+    if df_to_update == "pack_list":
+        update_dataframe(st.session_state.pack_list_changes)
+        save_data(st.session_state.pack_list, sheets_connection)
+    elif df_to_update == "responsibilities":
+        update_dataframe(st.session_state.responsibilities_changes)
+        save_data(st.session_state.responsibilities_changes, sheets_connection)
 
 
 def setup_initial_session_state(forceClear=False):
     
     for key, value in INITIAL_SESSION_STATE.items():
         st.session_state[key] = value
+
+def setup_gsheets_connection(worksheet="pack_list"):
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df = conn.read(worksheet=1)
+    df = df.dropna(axis=1, how='all')
+    df = df.dropna(axis=0, how='all')
+    st.write("Df" , df)
+
+    return df, conn

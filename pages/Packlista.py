@@ -1,13 +1,13 @@
 import pandas as pd
 import streamlit as st
-from utils import on_data_edited, setup_initial_session_state
-from streamlit_gsheets import GSheetsConnection
+from utils import on_data_edited, setup_gsheets_connection, setup_initial_session_state
+
 
 
 def packlista():
     # Load the initial pack list
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    st.session_state.pack_list = conn.read()
+    
+    st.session_state.pack_list, conn = setup_gsheets_connection("pack_list")
     st.session_state.pack_list = st.session_state.pack_list.dropna(axis=1, how='all')
     st.session_state.pack_list = st.session_state.pack_list.dropna(axis=0, how='all')
     
@@ -17,7 +17,7 @@ def packlista():
     st.data_editor(pack_list.reset_index(drop=True), 
                                                 use_container_width=True,
                                                 on_change=on_data_edited,
-                                                args=(pack_list, conn),
+                                                args=("pack_list", conn),
                                                 key="pack_list_changes",
                                                 num_rows="dynamic")
 

@@ -14,7 +14,7 @@ def print_responsibilities():
     responsibilities, conn = setup_gsheets_connection("responsibilities")
     if "persisted_state" in st.session_state and "responsibilities" in st.session_state.persisted_state:
         responsibilities = st.session_state.persisted_state["responsibilities"]
-    st.session_state.responsibilities["Person"] = pd.DataFrame(
+    responsibilities["Person"] = pd.DataFrame(
         {
             "Person": [
                 "https://storage.cloud.google.com/streamlit_images/arvid.jpeg",
@@ -31,7 +31,7 @@ def print_responsibilities():
     column_config={"Person": st.column_config.ImageColumn(width="medium") }
 
 
-    st.data_editor(st.session_state.responsibilities.reset_index(drop=True), 
+    st.data_editor(responsibilities.reset_index(drop=True), 
                                                 use_container_width=True,
                                                 on_change=on_data_edited,
                                                 args=(responsibilities, "responsibilities", conn),

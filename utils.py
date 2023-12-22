@@ -26,14 +26,17 @@ def update_dataframe(df, changes):
         if changes['added_rows'][-1] == {}:
             pass
         else:
-            df = pd.concat([df, pd.DataFrame(changes['added_rows'])])
+            df = pd.concat([df, pd.DataFrame(changes['added_rows'])], ignore_index=True)
 
     # Delete rows
     if changes['deleted_rows']:
-        # delete all updated rows
-        for index in changes['deleted_rows']:
+        for index in sorted(changes['deleted_rows'], reverse=True):
             if index in df.index:
                 df = df.drop(index)
+                df = df.reset_index(drop=True)
+            else:
+                st.error("Failed to delete row")
+
 
     return df
 

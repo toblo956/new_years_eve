@@ -20,5 +20,5 @@ def cocktail_responsibilities():
 setup_initial_session_state()
 header = st.container()
 header.title("Cocktails (ändra o lägg till)")
-st.image('images/cocktail.png', width=500)
+st.image('images/cocktail.png', use_column_width=True)
 cocktail_responsibilities()

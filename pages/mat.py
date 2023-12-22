@@ -22,5 +22,5 @@ setup_initial_session_state()
 header = st.container()
 header.title("Mat (ändra o lägg till)")
 
-st.image('images/mat.png', width=300)
+st.image('images/mat.png', use_column_width=True)
 food_responsibilities()

@@ -2,10 +2,7 @@ import pandas as pd
 import streamlit as st
 from utils import setup_initial_session_state
 
-
 setup_initial_session_state()
-# Streamlit app layout
-st.set_page_config(page_title="Start")
 
 header = st.container()
 header.title("Välkommen till Orsa! ")
@@ -42,3 +39,4 @@ with d:
 with e:
     e.caption("Felix")
     e.image('images/felix.jpeg', width=100)
+

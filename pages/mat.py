@@ -17,7 +17,6 @@ def food_responsibilities():
 
 
 
-setup_initial_session_state()
 header = st.container()
 header.title("Mat (ändra o lägg till)")
 

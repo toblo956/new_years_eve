@@ -5,7 +5,6 @@ from utils import on_data_edited, setup_gsheets_connection, setup_initial_sessio
 
 def cocktail_responsibilities():
     st.session_state.cocktail_responsibilities, conn = setup_gsheets_connection("cocktails")
-    st.session_state.cocktail_responsibilities["Cocktail"] = st.session_state.cocktail_responsibilities["Cocktail"].astype(str)
     column_config={"Cocktail": st.column_config.TextColumn(width="medium") }
     st.data_editor(st.session_state.cocktail_responsibilities.reset_index(drop=True), 
                                                 use_container_width=True,

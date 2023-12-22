@@ -4,14 +4,16 @@ from utils import on_data_edited, setup_gsheets_connection, setup_initial_sessio
 
 
 def cocktail_responsibilities():
-    st.session_state.cocktail_responsibilities, conn = setup_gsheets_connection("cocktails")
-    column_config={"Cocktail": st.column_config.TextColumn(width="medium") }
-    st.data_editor(st.session_state.cocktail_responsibilities.reset_index(drop=True), 
+
+    cocktail_responsibilities, conn = setup_gsheets_connection("cocktails")
+    if "persisted_state" in st.session_state and "cocktail_responsibilities" in st.session_state.persisted_state:
+        cocktail_responsibilities = st.session_state.persisted_state["cocktail_responsibilities"]
+    
+    st.data_editor(cocktail_responsibilities.reset_index(drop=True), 
                                                 use_container_width=True,
                                                 on_change=on_data_edited,
-                                                args=("cocktail_responsibilities", conn),
+                                                args=(cocktail_responsibilities, "cocktail_responsibilities", conn),
                                                 key="cocktail_responsibilities_changes",
-                                                column_config=column_config,
                                                 num_rows="dynamic"
                                                 )
     

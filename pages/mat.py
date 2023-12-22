@@ -5,9 +5,11 @@ from utils import on_data_edited, setup_gsheets_connection, setup_initial_sessio
 
 
 def food_responsibilities():
-    st.session_state.food_responsibilities, conn = setup_gsheets_connection("mat")
+    food_responsibilities, conn = setup_gsheets_connection("mat")
+    if "persisted_state" in st.session_state and "food_responsibilities" in st.session_state.persisted_state:
+        food_responsibilities = st.session_state.persisted_state["food_responsibilities"]
 
-    st.data_editor(st.session_state.food_responsibilities.reset_index(drop=True), 
+    st.data_editor(food_responsibilities.reset_index(drop=True), 
                                                 use_container_width=True,
                                                 on_change=on_data_edited,
                                                 args=("food_responsibilities", conn),
@@ -16,7 +18,7 @@ def food_responsibilities():
                                                 )
 
 
-
+setup_initial_session_state()
 header = st.container()
 header.title("Mat (ändra o lägg till)")
 

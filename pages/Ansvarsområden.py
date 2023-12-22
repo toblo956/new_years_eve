@@ -11,8 +11,9 @@ from utils import on_data_edited, setup_gsheets_connection, setup_initial_sessio
 
 def print_responsibilities():
 
-    st.session_state.responsibilities, conn = setup_gsheets_connection("responsibilities")
-    
+    responsibilities, conn = setup_gsheets_connection("responsibilities")
+    if "persisted_state" in st.session_state and "responsibilities" in st.session_state.persisted_state:
+        responsibilities = st.session_state.persisted_state["responsibilities"]
     st.session_state.responsibilities["Person"] = pd.DataFrame(
         {
             "Person": [
@@ -33,7 +34,7 @@ def print_responsibilities():
     st.data_editor(st.session_state.responsibilities.reset_index(drop=True), 
                                                 use_container_width=True,
                                                 on_change=on_data_edited,
-                                                args=("responsibilities", conn),
+                                                args=(responsibilities, "responsibilities", conn),
                                                 key="responsibilities_changes",
                                                 column_config=column_config,
                                                 hide_index=True,)

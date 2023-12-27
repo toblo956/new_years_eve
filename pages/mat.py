@@ -12,7 +12,7 @@ def food_responsibilities():
     st.data_editor(food_responsibilities.reset_index(drop=True), 
                                                 use_container_width=True,
                                                 on_change=on_data_edited,
-                                                args=("food_responsibilities", conn),
+                                                args=(food_responsibilities, "food_responsibilities", conn),
                                                 key="food_responsibilities_changes",
                                                 num_rows="dynamic"
                                                 )
